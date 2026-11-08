@@ -1,0 +1,24 @@
+# Local Python environment and generated artifacts
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local financial data and generated deliverables
+*.duckdb
+*.duckdb.wal
+data/private/
+data/work/
+data/exports/
+
+# Local environment and operating system files
+.env
+.env.*
+!.env.example
+.DS_Store
