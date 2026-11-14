@@ -29,15 +29,41 @@ def seeded_store(tmp_path: Path) -> Iterator[duckdb.DuckDBPyConnection]:
         connection.close()
 
 
-def seed_minimal_context(conn: duckdb.DuckDBPyConnection) -> tuple[str, str, str]:
-    """Insert valid foreign-key context and return entity, period, and file IDs."""
-    entity_id = "ENT_T"
-    period_id = "ENT_T_2025M12_MGMT_CONS"
-    file_id = "F1"
+def seed_entity(
+    conn: duckdb.DuckDBPyConnection,
+    entity_id: str = "ENT_T",
+    name: str = "SIMULATED_ENTITY",
+    currency: str = "CNY",
+) -> str:
+    """Insert one entity and return its ID without creating other context."""
     conn.execute(
         "INSERT INTO entity (entity_id, name, reporting_currency) VALUES (?, ?, ?)",
-        [entity_id, "Test entity", "CNY"],
+        [entity_id, name, currency],
     )
+    return entity_id
+
+
+@pytest.fixture
+def store_with_entity(seeded_store: duckdb.DuckDBPyConnection) -> duckdb.DuckDBPyConnection:
+    """Return a canonical store with one simulated entity and no source files."""
+    seed_entity(seeded_store)
+    return seeded_store
+
+
+@pytest.fixture
+def sample_file(tmp_path: Path) -> Path:
+    """Write a small three-line CSV under a temporary raw-data directory."""
+    path = tmp_path / "raw" / "tb_SIMULATED.csv"
+    path.parent.mkdir()
+    path.write_text("account,balance\n1001,100\n1122,200\n", encoding="utf-8")
+    return path
+
+
+def seed_minimal_context(conn: duckdb.DuckDBPyConnection) -> tuple[str, str, str]:
+    """Insert valid foreign-key context and return entity, period, and file IDs."""
+    entity_id = seed_entity(conn, name="Test entity")
+    period_id = "ENT_T_2025M12_MGMT_CONS"
+    file_id = "F1"
     conn.execute(
         """
         INSERT INTO period (

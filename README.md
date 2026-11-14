@@ -1,7 +1,7 @@
 # FDD Workbench · 财务尽调分析工作台
 
 > **Status: Engineering Specification + Project Scaffold (pre-business-implementation).**
-> 架构、统一数据模型（Canonical DDL）、检查矩阵与工程实施规范均已冻结。已建立 Python 包骨架、Canonical Schema（model/schema.sql）与标准科目树（taxonomy/std_accounts.csv）；适配器、检查引擎与桥梁尚未实现。初始概念设计稿归档于 [docs/design-v1.md](docs/design-v1.md)。
+> 架构、统一数据模型（Canonical DDL）、检查矩阵与工程实施规范均已冻结。已建立 Python 包骨架、Canonical Schema（model/schema.sql）与标准科目树（taxonomy/std_accounts.csv）、源文件登记（intake/registry.py）；适配器、检查引擎与桥梁尚未实现。初始概念设计稿归档于 [docs/design-v1.md](docs/design-v1.md)。
 
 开发环境初始化（Python 3.11+）：
 
