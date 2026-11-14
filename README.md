@@ -1,7 +1,7 @@
 # FDD Workbench · 财务尽调分析工作台
 
 > **Status: Engineering Specification + Project Scaffold (pre-business-implementation).**
-> 架构、统一数据模型（Canonical DDL）、检查矩阵与工程实施规范均已冻结。已建立 Python 包骨架、依赖声明与 Ruff / pytest 配置，尚未开始编写业务代码。初始概念设计稿归档于 [docs/design-v1.md](docs/design-v1.md)。
+> 架构、统一数据模型（Canonical DDL）、检查矩阵与工程实施规范均已冻结。已建立 Python 包骨架、Canonical Schema（model/schema.sql）与标准科目树（taxonomy/std_accounts.csv）；适配器、检查引擎与桥梁尚未实现。初始概念设计稿归档于 [docs/design-v1.md](docs/design-v1.md)。
 
 开发环境初始化（Python 3.11+）：
 
@@ -13,7 +13,7 @@ ruff check .
 python -m pytest
 ```
 
-当前仅包含包导入冒烟检查；下文的 `fddw` 命令、Schema、检查规则及输出均为待实现规范。
+当前已实现 Canonical Schema、标准科目树校验与 Store 初始化；下文的业务 `fddw` 命令、检查规则及输出仍为待实现规范。
 
 > Import a target company's financial files — structured accounting exports (`CSV` / `XLSX`) or public filings (`PDF` / `XBRL`) — normalize them onto one auditable canonical model in DuckDB, run a configurable dual-runner (`SQL` + `Python`) financial due diligence (FDD) check matrix, adjudicate findings into quantified deal adjustments (`QoE` / `NWC Peg` / `Net Debt`), and export both a query-ready DuckDB/Parquet analysis store and a rendered Excel Databook.
 
@@ -97,7 +97,8 @@ graph TD
 
 1. **损益类科目期末结转规则与符号约定（适配用友/金蝶等国内财务软件）**
    - 国内账套月结/年结后，损益类科目（Revenue / COGS / Opex）结转至“本年利润”，期末余额 `closing` 常为 `0`。`trial_balance` 必须区分资产负债表与利润表取数：`BS` 类科目取 `closing`；`IS` 类科目优先取 `ytd_debit` / `ytd_credit`（或当期净发生额 / `is_pre_closing = true` 口径），防止全年收入与费用在年末汇总归零。
-   - **统一符号约定**：`trial_balance` 中有符号余额（`opening`、`closing`）及净发生额统一按**借正贷负**存储；转换为报表与桥梁的自然业务方向时，统一乘以 `std_account.normal_sign`（借方正常余额如资产/成本费用为 `+1`，贷方正常余额如负债/权益/收入为 `-1`），杜绝收入、应付账款或净债务出现正负反号。
+   - **统一符号约定**：`trial_balance` 中有符号余额（`opening`、`closing`）及净发生额统一按**借正贷负**存储。`std_account.normal_sign` 的定义是**将借正贷负的有符号余额换算为所属大类自然方向的乘数**：资产/成本费用类为 `+1`，负债/权益/收入类为 `-1`；**备抵科目（坏账准备、存货跌价准备、累计折旧/摊销、销售退回与折让等）与其主科目取相同的 `category` 和相同的 `normal_sign`**，以便同类汇总自动冲抵得到净额（例：应收 `+100` 与坏账准备 `-10` 同乘 `+1` 得净额 `90`；若误设为 `-1` 会得到 `110`）。`normal_sign` 不是"该科目自身的正常余额方向"。
+   - **Step 4 适配器备忘**：国内 TB 导出常为"借方余额 / 贷方余额"双列或"借/贷方向"列，适配器入库前必须先合成有符号 `closing = 借方余额 − 贷方余额`（`opening` 同理），本约定才成立。本步不实现适配器。
 2. **口径隔离（`grain` / `basis` / `consolidation_scope` 防混算）**
    - 同一标的公司常同时导入月度管理层报表（`month` + `management`）与年度审计报表（`year` + `audited`），或合并口径（`consolidated`）与单体口径（`standalone`）。
    - `period` 表强制包含 `grain`、`basis`、`consolidation_scope` 三个维度；Check Engine 与 `bridges.py` 必须显式锁定单一目标口径，严禁跨 `grain`、跨 `basis` 或跨 `consolidation_scope` 直接 `SUM`。
@@ -157,7 +158,7 @@ CREATE TABLE IF NOT EXISTS std_account (
     name_zh VARCHAR,
     statement VARCHAR NOT NULL,             -- 'IS' | 'BS' | 'CF'
     category VARCHAR NOT NULL,              -- 'revenue' | 'cogs' | 'opex_sm' | 'opex_ga' | 'opex_rd' | 'da' | 'interest' | 'tax' | 'non_op' | 'nwc_ar' | 'nwc_inventory' | 'nwc_ap' | 'nwc_other' | 'cash' | 'debt' | 'debt_like' | 'equity' | 'other'
-    normal_sign INTEGER NOT NULL,           -- 1 (借方正常: 资产/成本费用) | -1 (贷方正常: 负债/权益/收入)
+    normal_sign INTEGER NOT NULL,           -- 借正贷负余额换算为所属大类自然方向的乘数: +1 (资产/成本费用) | -1 (负债/权益/收入); 备抵科目与主科目同 category 同 normal_sign
     is_ebitda_component BOOLEAN NOT NULL DEFAULT FALSE,
     is_nwc_component BOOLEAN NOT NULL DEFAULT FALSE,
     is_net_debt_component BOOLEAN NOT NULL DEFAULT FALSE

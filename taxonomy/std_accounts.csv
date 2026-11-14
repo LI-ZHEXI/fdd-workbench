@@ -1,0 +1,68 @@
+std_code,name,name_zh,statement,category,normal_sign,is_ebitda_component,is_nwc_component,is_net_debt_component
+IS.REV.MAIN,Main operating revenue,主营业务收入,IS,revenue,-1,TRUE,FALSE,FALSE
+IS.REV.OTHER,Other operating revenue,其他业务收入,IS,revenue,-1,TRUE,FALSE,FALSE
+IS.REV.RETURNS,Sales returns and allowances (contra revenue),销售退回与折让,IS,revenue,-1,TRUE,FALSE,FALSE
+IS.COGS.MAIN,Main operating cost,主营业务成本,IS,cogs,1,TRUE,FALSE,FALSE
+IS.COGS.OTHER,Other operating cost,其他业务成本,IS,cogs,1,TRUE,FALSE,FALSE
+IS.OPEX.TAX_SURCHARGE,Taxes and surcharges,税金及附加,IS,opex_ga,1,TRUE,FALSE,FALSE
+IS.OPEX.SM,Selling and marketing expenses,销售费用,IS,opex_sm,1,TRUE,FALSE,FALSE
+IS.OPEX.GA,General and administrative expenses,管理费用,IS,opex_ga,1,TRUE,FALSE,FALSE
+IS.OPEX.RD,Research and development expenses,研发费用,IS,opex_rd,1,TRUE,FALSE,FALSE
+IS.OPEX.CREDIT_LOSS,Credit impairment loss (bad debt expense),信用减值损失,IS,opex_ga,1,TRUE,FALSE,FALSE
+IS.DA.DEPRECIATION,Depreciation expense,折旧费用,IS,da,1,FALSE,FALSE,FALSE
+IS.DA.AMORTIZATION,Amortization expense,摊销费用,IS,da,1,FALSE,FALSE,FALSE
+IS.FIN.INTEREST_EXP,Interest expense,利息费用,IS,interest,1,FALSE,FALSE,FALSE
+IS.FIN.INTEREST_INC,Interest income,利息收入,IS,interest,-1,FALSE,FALSE,FALSE
+IS.FIN.FX,Foreign exchange loss (gain),汇兑损益,IS,interest,1,FALSE,FALSE,FALSE
+IS.FIN.OTHER,Bank charges and other finance costs,手续费及其他财务费用,IS,interest,1,FALSE,FALSE,FALSE
+IS.NONOP.ASSET_IMPAIRMENT,Asset impairment loss,资产减值损失,IS,non_op,1,FALSE,FALSE,FALSE
+IS.NONOP.GOV_GRANT,Other income incl. government grants,其他收益（含政府补助）,IS,non_op,-1,FALSE,FALSE,FALSE
+IS.NONOP.INVESTMENT_INC,Investment income,投资收益,IS,non_op,-1,FALSE,FALSE,FALSE
+IS.NONOP.FV_CHANGE,Fair value change gain (loss),公允价值变动损益,IS,non_op,-1,FALSE,FALSE,FALSE
+IS.NONOP.DISPOSAL,Gain (loss) on disposal of assets,资产处置损益,IS,non_op,-1,FALSE,FALSE,FALSE
+IS.NONOP.OTHER_INC,Non-operating income,营业外收入,IS,non_op,-1,FALSE,FALSE,FALSE
+IS.NONOP.OTHER_EXP,Non-operating expenses,营业外支出,IS,non_op,1,FALSE,FALSE,FALSE
+IS.TAX.INCOME_TAX,Income tax expense,所得税费用,IS,tax,1,FALSE,FALSE,FALSE
+BS.CASH.UNRESTRICTED,Cash and bank balances (unrestricted),货币资金（非受限）,BS,cash,1,FALSE,FALSE,TRUE
+BS.CASH.RESTRICTED,Restricted cash,受限货币资金,BS,cash,1,FALSE,FALSE,FALSE
+BS.NWC.NOTES_RECEIVABLE,Notes receivable,应收票据,BS,nwc_ar,1,FALSE,TRUE,FALSE
+BS.NWC.AR,Accounts receivable (gross),应收账款,BS,nwc_ar,1,FALSE,TRUE,FALSE
+BS.NWC.AR_PROVISION,Allowance for doubtful accounts (contra AR),坏账准备,BS,nwc_ar,1,FALSE,TRUE,FALSE
+BS.NWC.CONTRACT_ASSETS,Contract assets,合同资产,BS,nwc_ar,1,FALSE,TRUE,FALSE
+BS.NWC.PREPAYMENTS,Prepayments to suppliers,预付账款,BS,nwc_other,1,FALSE,TRUE,FALSE
+BS.NWC.OTHER_RECEIVABLES,Other receivables,其他应收款,BS,nwc_other,1,FALSE,TRUE,FALSE
+BS.NWC.INVENTORY,Inventories (gross),存货,BS,nwc_inventory,1,FALSE,TRUE,FALSE
+BS.NWC.INVENTORY_PROVISION,Inventory write-down provision (contra),存货跌价准备,BS,nwc_inventory,1,FALSE,TRUE,FALSE
+BS.NWC.OTHER_CURRENT_ASSETS,Other current assets,其他流动资产,BS,nwc_other,1,FALSE,TRUE,FALSE
+BS.NWC.NOTES_PAYABLE,Notes payable,应付票据,BS,nwc_ap,-1,FALSE,TRUE,FALSE
+BS.NWC.AP,Accounts payable,应付账款,BS,nwc_ap,-1,FALSE,TRUE,FALSE
+BS.NWC.CONTRACT_LIABILITIES,Advances from customers / contract liabilities,预收款项及合同负债,BS,nwc_other,-1,FALSE,TRUE,FALSE
+BS.NWC.PAYROLL_PAYABLE,Employee benefits payable,应付职工薪酬,BS,nwc_other,-1,FALSE,TRUE,FALSE
+BS.NWC.TAXES_PAYABLE,Taxes payable,应交税费,BS,nwc_other,-1,FALSE,TRUE,FALSE
+BS.NWC.OTHER_PAYABLES,Other payables,其他应付款,BS,nwc_other,-1,FALSE,TRUE,FALSE
+BS.DEBT.SHORT_TERM_LOANS,Short-term borrowings,短期借款,BS,debt,-1,FALSE,FALSE,TRUE
+BS.DEBT.CURRENT_PORTION_LT,Current portion of non-current liabilities,一年内到期的非流动负债,BS,debt,-1,FALSE,FALSE,TRUE
+BS.DEBT.LONG_TERM_LOANS,Long-term borrowings,长期借款,BS,debt,-1,FALSE,FALSE,TRUE
+BS.DEBT.BONDS,Bonds payable,应付债券,BS,debt,-1,FALSE,FALSE,TRUE
+BS.DEBT.LEASE_LIABILITIES,Lease liabilities,租赁负债,BS,debt,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.DIVIDENDS_PAYABLE,Dividends payable,应付股利,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.SHAREHOLDER_LOANS,Loans from shareholders and related parties,股东及关联方借款,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.ACCRUED_BONUS,Accrued unpaid bonuses,应付未付奖金,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.OVERDUE_TAX,Overdue taxes and income tax payable,逾期税款及应交所得税,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.CAPEX_PAYABLE,Payables for equipment and construction,应付设备及工程款,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.DEBTLIKE.PROVISIONS,Provisions,预计负债,BS,debt_like,-1,FALSE,FALSE,TRUE
+BS.NCA.PPE,Property plant and equipment (gross),固定资产原值,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.ACC_DEPRECIATION,Accumulated depreciation (contra PPE),累计折旧,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.CIP,Construction in progress,在建工程,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.INTANGIBLES,Intangible assets (gross),无形资产原值,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.ACC_AMORTIZATION,Accumulated amortization (contra intangibles),累计摊销,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.ROU_ASSETS,Right-of-use assets,使用权资产,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.LT_INVESTMENTS,Long-term equity investments,长期股权投资,BS,other,1,FALSE,FALSE,FALSE
+BS.NCA.OTHER,Other non-current assets incl. deferred tax assets,其他非流动资产（含递延所得税资产）,BS,other,1,FALSE,FALSE,FALSE
+BS.NCL.OTHER,Other non-current liabilities incl. deferred income and DTL,其他非流动负债（含递延收益及递延所得税负债）,BS,other,-1,FALSE,FALSE,FALSE
+BS.EQUITY.PAID_IN_CAPITAL,Paid-in capital (share capital),实收资本（股本）,BS,equity,-1,FALSE,FALSE,FALSE
+BS.EQUITY.CAPITAL_RESERVE,Capital reserve,资本公积,BS,equity,-1,FALSE,FALSE,FALSE
+BS.EQUITY.SURPLUS_RESERVE,Surplus reserve,盈余公积,BS,equity,-1,FALSE,FALSE,FALSE
+BS.EQUITY.RETAINED_EARNINGS,Retained earnings,未分配利润,BS,equity,-1,FALSE,FALSE,FALSE
+BS.EQUITY.CURRENT_YEAR_PROFIT,Current year profit (CN closing account),本年利润,BS,equity,-1,FALSE,FALSE,FALSE
+BS.EQUITY.PROFIT_DISTRIBUTION,Profit distribution (CN),利润分配,BS,equity,-1,FALSE,FALSE,FALSE
